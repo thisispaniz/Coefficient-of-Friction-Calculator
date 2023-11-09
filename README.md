@@ -7,7 +7,7 @@ This project is about simplifying the process of finding the coefficient of Fric
 ## How to install Coefficient of Friction Calculator
 
 The executable file:
-Download Coefficient_of_Friction_Calculator.exe and simply run it.
+Download Coefficient_of_Friction_Calculator.exe and simply run it. You can find it in tags under Releases.
 
 The python code:
 You can clone the repository or simply download the Coefficient_of_Friction_Calculator.py.
