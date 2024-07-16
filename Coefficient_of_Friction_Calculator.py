@@ -11,7 +11,7 @@ import math
 
 root = Tk()
 root.title('Coefficient of Friction Calculator')
-root.iconbitmap('C:/Users/paniz/Documents/New folder (2)/Icon.ico')
+root.iconbitmap('Icon.ico')
 root.geometry("530x512+300+150")
 
 
