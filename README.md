@@ -8,6 +8,7 @@ This project is about simplifying the process of finding the coefficient of Fric
 
 The executable file:
 Download Coefficient_of_Friction_Calculator.exe and simply run it. You can find it in tags under Releases.
+NOTE: You may experience issues when running the executable. These issues are being resolved.
 
 The python code:
 You can clone the repository or simply download the Coefficient_of_Friction_Calculator.py.
