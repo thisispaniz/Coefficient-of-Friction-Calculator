@@ -11,7 +11,7 @@ import math
 
 root = Tk()
 root.title('Coefficient of Friction Calculator')
-root.iconbitmap('Icon.ico')
+###root.iconbitmap('Icon.ico')
 root.geometry("530x512+300+150")
 
 
@@ -326,49 +326,84 @@ def maintab ():
             def cob():
                 cb = Frame(root)
                 cb.grid(row=0, column=0, sticky=NSEW)
-                cbv = IntVar()
-                Label(cb, text='Type of Support:').grid(row=0, column=0, sticky=W, pady=10, padx=10)
-                Radiobutton(cb, text='Smooth Concrete', variable=cbv, value=1).grid(row=1, column=0, sticky=W, pady=10, padx=30)
-                Radiobutton(cb, text='Almost Smooth Concrete', variable=cbv, value=2).grid(row=2, column=0, sticky=W, pady=10, padx=30) 
-                Radiobutton(cb, text='Simple Brick Work', variable=cbv, value=3).grid(row=3, column=0, sticky=W, pady=10, padx=30)
-                Radiobutton(cb, text='Brickwork with Coating', variable=cbv, value=4).grid(row=4, column=0, sticky=W, pady=10, padx=30)
+                cbv = DoubleVar()
+                Label(cb, text='Type of Area:').grid(row=0, column=0, sticky=W, pady=10, padx=10)
+                Radiobutton(cb, text='Circular', variable=cbv, value=1).grid(row=1, column=0, sticky=W, pady=10, padx=30)
+                Radiobutton(cb, text='Non-Circular', variable=cbv, value=2).grid(row=2, column=0, sticky=W, pady=10, padx=30)
                 def next_cob():
                     if cbv.get() == 1:
-                        cob1 = Frame(root)
-                        cob1.grid(row=0, column=0, sticky=NSEW)
-                        Label(cob1, text='α = 0.0003 - 0.0004').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                        Button(cob1, text='Start Over', command=maintab).place(x=30, y=450)
-                        cob1.tkraise()
+                        circular = Frame(root)
+                        circvar = DoubleVar()
+                        circular.grid(row=0, column=0, sticky=NSEW)
+                        Label(circular, text='Type of cover:').grid(row=0, column=0, sticky=W, pady=10, padx=10)
+                        Radiobutton(circular, text="Smooth Concrete", variable=circvar, value=0.00025).grid(row=1, column=0, sticky=W, pady=10, padx=30)
+                        Radiobutton(circular, text="Rough Concrete", variable=circvar, value=0.00070).grid(row=2, column=0, sticky=W, pady=10, padx=30)
+                        Radiobutton(circular, text="Bricklaying", variable=circvar, value=0.00130).grid(row=3, column=0, sticky=W, pady=10, padx=30)
+                        Radiobutton(circular, text="Rock Cover", variable=circvar, value=0.00800).grid(row=4, column=0, sticky=W, pady=10, padx=30)
+                        Radiobutton(circular, text="Rough Rock Cover", variable=circvar, value=0.02000).grid(row=5, column=0, sticky=W, pady=10, padx=30)
+                        def next_circular():
+                            solution = Frame(root)
+                            solution.grid(row=0, column=0, sticky=NSEW)
+                            Label(solution, text="Enter the diameter:").grid(row=0, column=0, sticky=W, pady=10, padx=10)
+                            D = Entry(solution)
+                            D.grid(row=0, column=1, padx=10, pady=10)
+                            def getresult():
+                                result = Frame(root)
+                                result.grid(row=0, column=0, sticky=NSEW)
+                                d_value = float(D.get())
+                                d0_value = float(circvar.get())
+                                numerator = 0.015
+                                denominator = ((1.74 + 2 * math.log10(d_value / d0_value)) ** 2)
+                                alpha = numerator / denominator
+                                Label(result, text=f"α = {alpha:.8f}").grid(row=0, column=0, sticky="W", pady=100, padx=10)
+                                result.tkraise()
+                                Button(solution, text='Start Over', command=maintab).place(x=30, y=450)
+                            solution.tkraise()
+                            Button(solution, text='Next', command=getresult).place(x=405, y=450)
+                            Button(solution, text='Start Over', command=maintab).place(x=30, y=450)
+                        Button(circular, text='Next', command=next_circular).place(x=405, y=450)
+                        Button(circular, text='Start Over', command=maintab).place(x=30, y=450)
+                        circular.tkraise()
                     if cbv.get() == 2:
-                        cob2 = Frame(root)
-                        cob2.grid(row=0, column=0, sticky=NSEW)
-                        Label(cob2, text='α = 0.0005 - 0.0007').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                        Button(cob2, text='Start Over', command=maintab).place(x=30, y=450)
-                        cob2.tkraise()
-                    if cbv.get() == 3:
-                        cob3 = Frame(root)
-                        cob3.grid(row=0, column=0, sticky=NSEW)
-                        Label(cob3, text='α = 0.0003 - 0.0004').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                        Button(cob3, text='Start Over', command=maintab).place(x=30, y=450)
-                        cob3.tkraise()
-                    if cbv.get() == 4:
-                        cob4 = Frame(root)
-                        cob4.grid(row=0, column=0, sticky=NSEW)
-                        Label(cob4, text='α = 0.00025 - 0.0003').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                        Button(cob4, text='Start Over', command=maintab).place(x=30, y=450)
-                        cob4.tkraise()
-
+                        noncircular = Frame(root)
+                        noncircvar = DoubleVar()
+                        noncircular.grid(row=0, column=0, sticky=NSEW)
+                        Label(noncircular, text='Type of cover:').grid(row=0, column=0, sticky=W, pady=10, padx=10)
+                        Radiobutton(noncircular, text="Smooth Concrete", variable=noncircvar, value=0.00025).grid(row=1, column=0, sticky=W, pady=10, padx=30)
+                        Radiobutton(noncircular, text="Rough Concrete", variable=noncircvar, value=0.00070).grid(row=2, column=0, sticky=W, pady=10, padx=30)
+                        Radiobutton(noncircular, text="Bricklaying", variable=noncircvar, value=0.00130).grid(row=3, column=0, sticky=W, pady=10, padx=30)
+                        Radiobutton(noncircular, text="Rock Cover", variable=noncircvar, value=0.00800).grid(row=4, column=0, sticky=W, pady=10, padx=30)
+                        Radiobutton(noncircular, text="Rough Rock Cover", variable=noncircvar, value=0.02000).grid(row=5, column=0, sticky=W, pady=10, padx=30)
+                        def next_noncircular():
+                            solution = Frame(root)
+                            solution.grid(row=0, column=0, sticky=NSEW)
+                            Label(solution, text="Enter the Surface Area:").grid(row=0, column=0, sticky=W, pady=10, padx=10)
+                            D = Entry(solution)
+                            D.grid(row=0, column=1, padx=10, pady=10)
+                            def getresult():
+                                result = Frame(root)
+                                result.grid(row=0, column=0, sticky=NSEW)
+                                d_value = float(D.get())
+                                d0_value = float(noncircvar.get())
+                                numerator = 0.015
+                                denominator = (1.74 +  16.3 * math.log10((4.8 * (math.sqrt(d_value))) / d0_value)) ** 2
+                                alpha = numerator / denominator
+                                Label(result, text=f"α = {alpha:.8f}").grid(row=0, column=0, sticky="W", pady=100, padx=10)
+                                result.tkraise()
+                                Button(solution, text='Start Over', command=maintab).place(x=30, y=450)
+                            solution.tkraise()
+                            Button(solution, text='Next', command=getresult).place(x=405, y=450)
+                            Button(solution, text='Start Over', command=maintab).place(x=30, y=450)
+                        Button(noncircular, text='Next', command=next_noncircular).place(x=405, y=450)
+                        Button(noncircular, text='Start Over', command=maintab).place(x=30, y=450)
+                        noncircular.tkraise()
+                next_cob()
                 Button(cb, text='Next', command=next_cob).place(x=405, y=450)
                 Button(cb, text='Start Over', command=maintab).place(x=30, y=450)
 
-                
-                
-                
-                
-                
-                cb.tkraise()   
+                cb.tkraise()
             cob()
-            
+
         elif r.get() == 4:
             def precast():
                 pc = Frame(root)
@@ -380,7 +415,7 @@ def maintab ():
                 Radiobutton(pc, text="Concrete frames, made up of base and column\nwith a 'T' cross section and a\ncentral base", variable=pcv, value=3).grid(row=3, column=0, sticky=W, pady=10, padx=30)
                 Radiobutton(pc, text='Concrete frame made up of four joints', variable=pcv, value=4).grid(row=4, column=0, sticky=W, pady=10, padx=30)
                 Radiobutton(pc, text='Polygonal concrete frame', variable=pcv, value=5).grid(row=5, column=0, sticky=W, pady=10, padx=30)
-                
+
                 def next_pc1():
                     if pcv.get() == 1:
                         pc.destroy()
@@ -588,61 +623,115 @@ def maintab ():
                         scr.grid(row=0, column=0, sticky=NSEW)
                         sc1 = StringVar()
                         sc2 = StringVar()
+                        sc3 = StringVar()
                         Label(scr, text='Diameter of the woods (In cm): ').grid(row=0, column=0, sticky=W, padx=10, pady=10)
                         OptionMenu(scr, sc1, "", "18", "20", "24").grid(row=0, column=1, padx=10, pady=10)
                         Label(scr, text='Length/Diameter: ').grid(row=1, column=0, sticky=W, padx=10, pady=10)
                         OptionMenu(scr, sc2, "", "4", "6", "8").grid(row=1, column=1, padx=10, pady=10)
+                        Label(scr, text='Surface area: ').grid(row=2, column=0, sticky=W, padx=10, pady=10)
+                        OptionMenu(scr, sc3, "", "4", "6").grid(row=2, column=1, padx=10, pady=10)
                         sc1.set("Select..")
                         sc2.set("Select...")
+                        sc3.set("Select...")
                         def next_scaffolding2():
-                            if int(sc1.get()) == 18:
-                                if int(sc2.get()) == 4:
-                                    scr1 = Frame(root)
-                                    scr1.grid(row=0, column=0, sticky=NSEW)
-                                    Label(scr1, text='α = 0.0043').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                                    Button(scr1, text='Start Over', command=maintab).place(x=30, y=450)
-                                elif int(sc2.get()) == 6:
-                                    scr2 = Frame(root)
-                                    scr2.grid(row=0, column=0, sticky=NSEW)
-                                    Label(scr2, text='α = 0.0040').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                                    Button(scr2, text='Start Over', command=maintab).place(x=30, y=450)
-                                elif int(sc2.get()) == 8:
-                                    scr3 = Frame(root)
-                                    scr3.grid(row=0, column=0, sticky=NSEW)
-                                    Label(scr3, text='α = 0.0037').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                                    Button(scr3, text='Start Over', command=maintab).place(x=30, y=450)
-                            elif int(sc1.get()) == 20:
-                                if int(sc2.get()) == 4:
-                                    scr4 = Frame(root)
-                                    scr4.grid(row=0, column=0, sticky=NSEW)
-                                    Label(scr4, text='α = 0.0044').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                                    Button(scr4, text='Start Over', command=maintab).place(x=30, y=450)
-                                elif int(sc2.get()) == 6:
-                                    scr5 = Frame(root)
-                                    scr5.grid(row=0, column=0, sticky=NSEW)
-                                    Label(scr5, text='α = 0.0041').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                                    Button(scr5, text='Start Over', command=maintab).place(x=30, y=450)
-                                elif int(sc2.get()) == 8:
-                                    scr6 = Frame(root)
-                                    scr6.grid(row=0, column=0, sticky=NSEW)
-                                    Label(scr6, text='α = 0.0039').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                                    Button(scr6, text='Start Over', command=maintab).place(x=30, y=450)
-                            if int(sc1.get()) == 24:
-                                if int(sc2.get()) == 4:
-                                    scr7 = Frame(root)
-                                    scr7.grid(row=0, column=0, sticky=NSEW)
-                                    Label(scr7, text='α = 0.0046').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                                    Button(scr7, text='Start Over', command=maintab).place(x=30, y=450)
-                                elif int(sc2.get()) == 6:
-                                    scr8 = Frame(root)
-                                    scr8.grid(row=0, column=0, sticky=NSEW)
-                                    Label(scr8, text='α = 0.0043').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                                    Button(scr8, text='Start Over', command=maintab).place(x=30, y=450)
-                                elif int(sc2.get()) == 8:
-                                    scr9 = Frame(root)
-                                    scr9.grid(row=0, column=0, sticky=NSEW)
-                                    Label(scr9, text='α = 0.0040').grid(row=0, column=0, sticky=W, pady=100, padx=10)
-                                    Button(scr9, text='Start Over', command=maintab).place(x=30, y=450)
+                            if int(sc3.get()) == 4:
+                                if int(sc1.get()) == 18:
+                                    if int(sc2.get()) == 4:
+                                        scr1 = Frame(root)
+                                        scr1.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr1, text='α = 0.0043').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr1, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 6:
+                                        scr2 = Frame(root)
+                                        scr2.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr2, text='α = 0.0040').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr2, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 8:
+                                        scr3 = Frame(root)
+                                        scr3.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr3, text='α = 0.0037').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr3, text='Start Over', command=maintab).place(x=30, y=450)
+                                elif int(sc1.get()) == 20:
+                                    if int(sc2.get()) == 4:
+                                        scr4 = Frame(root)
+                                        scr4.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr4, text='α = 0.0044').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr4, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 6:
+                                        scr5 = Frame(root)
+                                        scr5.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr5, text='α = 0.0041').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr5, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 8:
+                                        scr6 = Frame(root)
+                                        scr6.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr6, text='α = 0.0039').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr6, text='Start Over', command=maintab).place(x=30, y=450)
+                                if int(sc1.get()) == 24:
+                                    if int(sc2.get()) == 4:
+                                        scr7 = Frame(root)
+                                        scr7.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr7, text='α = 0.0046').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr7, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 6:
+                                        scr8 = Frame(root)
+                                        scr8.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr8, text='α = 0.0043').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr8, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 8:
+                                        scr9 = Frame(root)
+                                        scr9.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr9, text='α = 0.0040').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr9, text='Start Over', command=maintab).place(x=30, y=450)
+                            elif int(sc3.get()) == 6:
+                                if int(sc1.get()) == 18:
+                                    if int(sc2.get()) == 4:
+                                        scr1 = Frame(root)
+                                        scr1.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr1, text='α = 0.0040').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr1, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 6:
+                                        scr2 = Frame(root)
+                                        scr2.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr2, text='α = 0.0037').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr2, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 8:
+                                        scr3 = Frame(root)
+                                        scr3.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr3, text='α = 0.0034').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr3, text='Start Over', command=maintab).place(x=30, y=450)
+                                elif int(sc1.get()) == 20:
+                                    if int(sc2.get()) == 4:
+                                        scr4 = Frame(root)
+                                        scr4.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr4, text='α = 0.0041').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr4, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 6:
+                                        scr5 = Frame(root)
+                                        scr5.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr5, text='α = 0.0038').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr5, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 8:
+                                        scr6 = Frame(root)
+                                        scr6.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr6, text='α = 0.0036').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr6, text='Start Over', command=maintab).place(x=30, y=450)
+                                if int(sc1.get()) == 24:
+                                    if int(sc2.get()) == 4:
+                                        scr7 = Frame(root)
+                                        scr7.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr7, text='α = 0.0043').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr7, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 6:
+                                        scr8 = Frame(root)
+                                        scr8.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr8, text='α = 0.0040').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr8, text='Start Over', command=maintab).place(x=30, y=450)
+                                    elif int(sc2.get()) == 8:
+                                        scr9 = Frame(root)
+                                        scr9.grid(row=0, column=0, sticky=NSEW)
+                                        Label(scr9, text='α = 0.0037').grid(row=0, column=0, sticky=W, pady=100, padx=10)
+                                        Button(scr9, text='Start Over', command=maintab).place(x=30, y=450)
                         Button(scr, text='Next', command=next_scaffolding2).place(x=405, y=450)
                         Button(scr, text='Start Over', command=maintab).place(x=30, y=450)
                         scr.tkraise()
