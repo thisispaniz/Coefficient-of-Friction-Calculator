@@ -755,7 +755,7 @@ def maintab ():
                 wd.grid(row=0, column=0, sticky=NSEW)
                 Label(wd, text='How many wooden pillars are used?').grid(row=0, column=0, sticky=W, pady=10, padx=10)
                 Radiobutton(wd, text="Three", variable=wdv, value=1).grid(row=1, column=0, sticky=W, pady=10, padx=30)
-                Radiobutton(wd, text="Four", variable=wdv, value=2, state="disabled").grid(row=2, column=0, sticky=W, pady=10, padx=30)
+                Radiobutton(wd, text="Four", variable=wdv, value=2).grid(row=2, column=0, sticky=W, pady=10, padx=30)
                 Radiobutton(wd, text="Other", variable=wdv, value=3).grid(row=3, column=0, sticky=W, pady=10, padx=30)
                 wd.tkraise()
                 
@@ -1153,17 +1153,17 @@ def maintab ():
                         Button(wd1, text='Start Over', command=maintab).place(x=30, y=450)
                     elif wdv.get() == 2:
                         wd.destroy()
-                        wd2 = Frame(root)
-                        wd2.grid(row=0, column=0, sticky=NSEW)
+                        wd1 = Frame(root)
+                        wd1.grid(row=0, column=0, sticky=NSEW)
                         wdv1 = StringVar()
                         wdv2 = StringVar()
-                        Label(wd2, text='Diameter of wood pillar: ').grid(row=0, column=0, padx=10, pady=10)
-                        OptionMenu(wd2, wdv1,"", "15", "17", "20", "22", "Other").grid(row=0, column=1, padx=10, pady=10)
-                        Label(wd2, text='Length/Diameter: ').grid(row=1, column=0, padx=10, pady=10)
-                        OptionMenu(wd2, wdv2,"", "2", "3", "4", "5", "6", "8", "Other").grid(row=1, column=1, padx=10, pady=10)
+                        Label(wd1, text='Diameter of wood pillar: ').grid(row=0, column=0, padx=10, pady=10)
+                        OptionMenu(wd1, wdv1,"", "15", "17", "20", "22", "Other").grid(row=0, column=1, padx=10, pady=10)
+                        Label(wd1, text='Length/Diameter: ').grid(row=1, column=0, padx=10, pady=10)
+                        OptionMenu(wd1, wdv2,"", "2", "3", "4", "5", "6", "8", "Other").grid(row=1, column=1, padx=10, pady=10)
                         wdv1.set("Select..")
                         wdv2.set("Select...")
-                        wd2.tkraise()
+                        wd1.tkraise()
                         def next_wd2():
                             if wdv1.get() == "Other" or wdv2.get() == "Other":
                                 wdf = Frame(root)
@@ -1341,8 +1341,6 @@ def maintab ():
                                     Label(wd2, text='α = 0.00250').grid(row=0, column=0, sticky=W, pady=100, padx=10)
                                     Button(wd2, text="Start Over", command=maintab).place(x=30, y=450)
                                     wd2.tkraise()
-                            
-                                        
                         Button(wd1, text='Next', command=next_wd2).place(x=405, y=450)
                         Button(wd1, text='Start Over', command=maintab).place(x=30, y=450)
                         wd1.tkraise()
