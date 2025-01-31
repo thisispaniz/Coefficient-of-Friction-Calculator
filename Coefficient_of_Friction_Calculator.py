@@ -25,7 +25,7 @@ def maintab ():
     Main.grid(row=0, column=0, sticky=NSEW)
     r = tk.IntVar()
     l1 = Label(Main, text="Choose support system: ").grid(row=0, column=0, sticky=W, pady=10, padx=10)
-    r1 = Radiobutton(Main, text="Metal", variable=r, value=1, state=DISABLED).grid(row=1, column=0, sticky=W, pady=10, padx=30)
+    r1 = Radiobutton(Main, text="Metal", variable=r, value=1).grid(row=1, column=0, sticky=W, pady=10, padx=30)
     r2 = Radiobutton(Main, text="Wood", variable=r, value=2).grid(row=2, column=0, sticky=W, pady=10, padx=30)
     r3 = Radiobutton(Main, text="Scaffolding", variable=r, value=3).grid(row=3, column=0, sticky=W, pady=10, padx=30)
     r4 = Radiobutton(Main, text="Precast Concrete", variable=r, value=4).grid(row=4, column=0, sticky=W, pady=10, padx=30)
@@ -1356,11 +1356,65 @@ def maintab ():
             wood()
         
         elif r.get() == 1:
-            True
-            #Metaltab()
+            metal = Frame(root)
+            metal.grid(row=0, column=0, sticky=NSEW)
+            metv = IntVar()
+            Label(metal, text='Type of support:').grid(row=0, column=0, sticky=W, pady=10, padx=10)
+            Radiobutton(metal, text="Arched metal frame", variable=metv, value=1).grid(row=1, column=0, sticky=W, pady=10, padx=30)
+            Radiobutton(metal, text="Trapezoidal metal frame", variable=metv, value=2).grid(row=2, column=0, sticky=W, pady=10, padx=30)
+            Radiobutton(metal, text="Trapezoidal metal frame with concrete column and metal cap", variable=metv, value=3).grid(row=3, column=0, sticky=W, pady=10, padx=30)
+            def next_metal():
+                kashibadze = Frame(root)
+                kashibadze.grid(row=0, column=0, sticky=NSEW)
+                Label(kashibadze, text="What is the mining area? ").grid(row=0, column=0, padx=10, pady=10)
+                S = Entry(kashibadze)
+                S.grid(row=0, column=1, padx=10, pady=10)
+                Label(kashibadze, text="What is the interior circumference? ").grid(row=1, column=0, padx=10, pady=10)
+                p = Entry(kashibadze)
+                p.grid(row=1, column=1, padx=10, pady=10)
+                Label(kashibadze, text="What is the distance between two consecutive frames? ").grid(row=2, column=0, padx=10, pady=10)
+                l = Entry(kashibadze)
+                l.grid(row=2, column=1, padx=10, pady=10)
+                kashibadze.tkraise()
+                def next_kashibadze():
+                    if metv.get() == 1:
+                        result = Frame(root)
+                        result.grid(row=0, column=0, sticky=NSEW)
+                        s_value = float(S.get())
+                        p_value = float(p.get())
+                        l_value = float(l.get())
+                        alpha = (1 / (0.135 + (0.2 * math.log10((2 * s_value) / (p_value * l_value)))) ** 2) * 0.0001
+                        Label(result, text=f"α = {alpha:.6f}").grid(row=0, column=0, sticky="W", pady=100, padx=10)
+                        Button(result, text="Start Over", command=maintab).place(x=30, y=450)
+                        result.tkraise()
+                    elif metv.get() == 2:
+                        result = Frame(root)
+                        result.grid(row=0, column=0, sticky=NSEW)
+                        s_value = float(S.get())
+                        p_value = float(p.get())
+                        l_value = float(l.get())
+                        alpha = (1 / (0.135 + (0.2 * math.log10((2 * s_value) / (p_value * l_value)))) ** 2) * 0.0001
+                        Label(result, text=f"α = {alpha:.6f}").grid(row=0, column=0, sticky="W", pady=100, padx=10)
+                        Button(result, text="Start Over", command=maintab).place(x=30, y=450)
+                        result.tkraise()
+                    elif metv.get() == 3:
+                        result = Frame(root)
+                        result.grid(row=0, column=0, sticky=NSEW)
+                        s_value = float(S.get())
+                        p_value = float(p.get())
+                        l_value = float(l.get())
+                        alpha = (1 / (0.20 + (0.12 * math.log10((2 * s_value) / (p_value * l_value)))) ** 2) * 0.0001
+                        Label(result, text=f"α = {alpha:.6f}").grid(row=0, column=0, sticky="W", pady=100, padx=10)
+                        Button(result, text="Start Over", command=maintab).place(x=30, y=450)
+                        result.tkraise()
+                Button(kashibadze, text='Next', command=next_kashibadze).place(x=405, y=450)
+                Button(kashibadze, text='Start Over', command=maintab).place(x=30, y=450)
+            Button(metal, text='Next', command=next_metal).place(x=405, y=450)
+            Button(metal, text='Start Over', command=maintab).place(x=30, y=450)
+            metal.tkraise()
 
     
-    b1 = Button(Main, text='Next', command= nextstep_1).place(x=405, y=450) 
+    b1 = Button(Main, text='Next', command= nextstep_1).place(x=405, y=450)
 
 
     Main.tkraise()
