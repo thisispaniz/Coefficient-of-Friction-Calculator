@@ -778,12 +778,17 @@ def maintab ():
                         def next_voronin():
                             nvoronin = Frame(root)
                             nvoronin.grid(row=0, column=0, sticky=NSEW)
-                            S_value = float(S.get())  
-                            d_value = float(d.get())  
+                            S_value = float(S.get())
+                            d_value = float(d.get())
+                            l_value = float(l.get())
+                            m2_value = float(m2.get())
+                            delta = l_value/d_value
+                            m1_value = 1 + (0.07/delta) - math.sqrt(0.14/delta)
                             epsilon = 0.48 * math.sqrt(S_value) / d_value
-                            Label(nvoronin, text=f"α = {epsilon:.2f}").grid(row=0, column=0, sticky="W", pady=100, padx=10)
+                            alpha = (1/(0.21 + 0.11 * math.log10(epsilon/(m1_value * m2_value * delta))) ** 2) * 0.0001
+                            Label(nvoronin, text=f"α = {alpha:.6f}").grid(row=0, column=0, sticky="W", pady=100, padx=10)
                             Button(nvoronin, text="Start Over", command=maintab).place(x=30, y=450)
-                            nvoronin.tkraise()  
+                            nvoronin.tkraise()
                         Button(voronin, text="Next", command=next_voronin).place(x=405, y=450)
                         Button(voronin, text="Start Over", command=maintab).place(x=30, y=450)
                         voronin.tkraise()
